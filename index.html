@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Só Brothers | Barbearia Premium</title>
+  
+  <!-- Fontes Cinzel e Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg-main: #0A0A0C;
+      --bg-card: #141518;
+      --border-card: #292C31;
+      --gold-gradient: linear-gradient(135deg, #F3D979, #C9A227, #8B6520);
+      --gold-metallic: linear-gradient(135deg, #FFF3C4 0%, #E5BE53 28%, #C99D26 55%, #8B631B 80%, #DFBA51 100%);
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: #EDEDED;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+
+    .bg-card-custom {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-card);
+    }
+
+    /* ========================================== */
+    /* 1. MICROINTERAÇÕES E EFEITO 3D NOS BOTÕES */
+    /* ========================================== */
+    .btn-gold {
+      position: relative;
+      overflow: hidden;
+      background: var(--gold-gradient);
+      color: #0A0A0C;
+      font-weight: 700;
+      min-height: 52px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 18px rgba(201, 162, 39, 0.35);
+      transform: translateY(0) scale(1);
+      z-index: 1;
+    }
+
+    .btn-gold:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 28px rgba(201, 162, 39, 0.45);
+    }
+
+    .btn-gold:active:not(:disabled) {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 3px 10px rgba(201, 162, 39, 0.2);
+    }
+
+    .btn-gold:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      box-shadow: none;
+      filter: grayscale(0.5);
+    }
+
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: -60%;
+      left: -70%;
+      width: 50%;
+      height: 220%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 10%,
+        rgba(255, 255, 255, 0.4) 45%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.4) 55%,
+        rgba(255, 255, 255, 0) 90%
+      );
+      transform: rotate(25deg);
+      pointer-events: none;
+      animation: btn-shimmer 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes btn-shimmer {
+      0% { left: -75%; opacity: 0; }
+      15% { opacity: 1; }
+      35% { left: 135%; opacity: 0; }
+      100% { left: 135%; opacity: 0; }
+    }
+
+    .card-interactive {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(0) scale(1);
+      cursor: pointer;
+    }
+    .card-interactive:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(201, 162, 39, 0.25);
+    }
+    .card-interactive:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .slot-interactive {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(0) scale(1);
+    }
+    .slot-interactive:hover:not(:disabled) {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 6px 16px rgba(201, 162, 39, 0.3);
+    }
+    .slot-interactive:active:not(:disabled) {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    .gold-text {
+      background: var(--gold-metallic);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-border {
+      border-color: #C9A227 !important;
+    }
+
+    .gold-glow {
+      box-shadow: 0 0 20px rgba(201, 162, 39, 0.25);
+    }
+
+    /* ========================================== */
+    /* 2. BACKGROUND ANIMADO (ELEMENTOS FLUTUANTES) */
+    /* ========================================== */
+    .floating-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .float-scissors {
+      position: absolute;
+      opacity: 0.16;
+      filter: drop-shadow(0 0 10px rgba(201, 162, 39, 0.25));
+      animation: floatScissors 8s ease-in-out infinite;
+    }
+
+    @keyframes floatScissors {
+      0%, 100% {
+        transform: translateY(0px) rotate(-15deg) scale(1);
+      }
+      50% {
+        transform: translateY(-24px) rotate(-5deg) scale(1.04);
+      }
+    }
+
+    .float-razor {
+      position: absolute;
+      opacity: 0.14;
+      filter: drop-shadow(0 0 10px rgba(201, 162, 39, 0.2));
+      animation: floatRazor 10s ease-in-out infinite;
+    }
+
+    @keyframes floatRazor {
+      0%, 100% {
+        transform: translateY(0px) rotate(20deg) scale(1);
+      }
+      50% {
+        transform: translateY(-30px) rotate(32deg) scale(1.05);
+      }
+    }
+
+    .gold-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FFF3C4 0%, #E5BE53 50%, rgba(201, 162, 39, 0) 100%);
+      opacity: 0;
+      pointer-events: none;
+      animation: particleDrift linear infinite;
+    }
+
+    @keyframes particleDrift {
+      0% {
+        transform: translateY(105vh) translateX(0);
+        opacity: 0;
+      }
+      15% {
+        opacity: 0.35;
+      }
+      80% {
+        opacity: 0.35;
+      }
+      100% {
+        transform: translateY(-30px) translateX(35px);
+        opacity: 0;
+      }
+    }
+
+    /* ========================================== */
+    /* 3. TRANSIÇÃO DE TELAS & STAGGER ANIMATIONS */
+    /* ========================================== */
+    .screen-fade-slide {
+      animation: fadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .stagger-item {
+      opacity: 0;
+      animation: staggerEntrance 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes staggerEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .stagger-1 { animation-delay: 50ms; }
+    .stagger-2 { animation-delay: 100ms; }
+    .stagger-3 { animation-delay: 150ms; }
+    .stagger-4 { animation-delay: 200ms; }
+    .stagger-5 { animation-delay: 250ms; }
+
+    @keyframes shakePin {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .shake {
+      animation: shakePin 0.4s ease-in-out;
+    }
+
+    /* ========================================== */
+    /* MAPEAMENTO DA CAPA OFICIAL (HOTSPOTS)      */
+    /* ========================================== */
+    .landing-screen {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+      background-color: var(--bg-main);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .landing-viewport {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 100dvh;
+      max-width: calc(100dvh * 0.558); /* Proporção nativa 1536x2752 da arte oficial */
+      max-height: 100dvh;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .capa-img-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Hotspot Botão "AGENDAR HORÁRIO" */
+    .hotspot-agendar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) translateY(0) scale(1);
+      bottom: 6.2%;
+      width: 68.8%;
+      max-width: 370px;
+      height: 5.0%;
+      min-height: 50px;
+      border-radius: 9999px;
+      background: transparent;
+      border: 2px solid transparent;
+      cursor: pointer;
+      overflow: hidden;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+      z-index: 20;
+    }
+
+    /* Brilho pulsante sutil */
+    .hotspot-agendar::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      background: radial-gradient(circle, rgba(255, 230, 120, 0.15) 0%, rgba(201, 162, 39, 0) 70%);
+      opacity: 0.6;
+      animation: pulseGlint 3.2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseGlint {
+      0%, 100% { opacity: 0.3; transform: scale(0.98); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+
+    /* Shimmer metálico sutil */
+    .hotspot-agendar::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -70%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 10%,
+        rgba(255, 255, 255, 0.3) 45%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0.3) 55%,
+        rgba(255, 255, 255, 0) 90%
+      );
+      transform: rotate(25deg);
+      pointer-events: none;
+      animation: hotspot-shimmer 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes hotspot-shimmer {
+      0% { left: -75%; opacity: 0; }
+      15% { opacity: 1; }
+      35% { left: 135%; opacity: 0; }
+      100% { left: 135%; opacity: 0; }
+    }
+
+    .hotspot-agendar:hover {
+      border-color: rgba(224, 190, 74, 0.45);
+      box-shadow: 0 0 25px rgba(201, 162, 39, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.15);
+      background-color: rgba(201, 162, 39, 0.12);
+      transform: translateX(-50%) translateY(-2px) scale(1.01);
+    }
+
+    /* Microinteração de toque mobile (redução para 0.97 e feedback visual dourado) */
+    .hotspot-agendar:active {
+      transform: translateX(-50%) translateY(1px) scale(0.97) !important;
+      background-color: rgba(201, 162, 39, 0.28) !important;
+      box-shadow: 0 0 35px rgba(201, 162, 39, 0.75), inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
+      border-color: rgba(243, 217, 121, 0.8) !important;
+    }
+
+    /* Hotspot Opção "ÁREA DO BARBEIRO" */
+    .hotspot-barbeiro {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) scale(1);
+      bottom: 1.6%;
+      width: 52%;
+      max-width: 270px;
+      height: 4.2%;
+      min-height: 48px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+      z-index: 20;
+    }
+
+    .hotspot-barbeiro:hover {
+      background-color: rgba(201, 162, 39, 0.12);
+      border-color: rgba(201, 162, 39, 0.3);
+      box-shadow: 0 0 16px rgba(201, 162, 39, 0.3);
+      transform: translateX(-50%) scale(1.02);
+    }
+
+    /* Microinteração de clique na Área do Barbeiro */
+    .hotspot-barbeiro:active {
+      transform: translateX(-50%) scale(0.97) !important;
+      background-color: rgba(201, 162, 39, 0.22) !important;
+      box-shadow: 0 0 22px rgba(201, 162, 39, 0.5) !important;
+      border-color: rgba(201, 162, 39, 0.5) !important;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0A0A0C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #292C31;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-black">
+
+  <!-- ========================================== -->
+  <!-- BACKGROUND ANIMADO COM ÍCONES E PARTÍCULAS -->
+  <!-- ========================================== -->
+  <div class="floating-bg">
+    <svg class="float-scissors w-24 h-24 top-16 -right-4 text-[#E0BE4A]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879a3 3 0 11-4.242-4.242L12 12zm0 0L9.121 9.121a3 3 0 114.242-4.242L16 7.5"/>
+    </svg>
+
+    <svg class="float-razor w-28 h-28 top-[45%] -left-8 text-[#C9A227]" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M19.5 8.5c-.83 0-1.5.67-1.5 1.5v1.27l-6.72 6.72c-.78.78-2.05.78-2.83 0L3.5 13.04l1.41-1.41 4.95 4.95c.2.2.51.2.71 0l6.72-6.72c-.18-.25-.29-.55-.29-.86 0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+    </svg>
+
+    <div class="gold-particle w-2 h-2 left-[14%]" style="animation-duration: 7s; animation-delay: 0s;"></div>
+    <div class="gold-particle w-1.5 h-1.5 left-[38%]" style="animation-duration: 9s; animation-delay: 2.5s;"></div>
+    <div class="gold-particle w-2.5 h-2.5 left-[62%]" style="animation-duration: 8s; animation-delay: 1.2s;"></div>
+    <div class="gold-particle w-1.5 h-1.5 left-[78%]" style="animation-duration: 10s; animation-delay: 4s;"></div>
+    <div class="gold-particle w-2 h-2 left-[90%]" style="animation-duration: 8.5s; animation-delay: 1.8s;"></div>
+  </div>
+
+  <!-- CABEÇALHO GLOBAL -->
+  <header id="header-global" class="w-full border-b border-[#292C31] bg-[#0A0A0C]/90 backdrop-blur sticky top-0 z-40 hidden">
+    <div class="max-w-md mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer transition hover:scale-105 active:scale-95 duration-200" onclick="navegarPara('home')">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#A47B38] to-[#E0BE4A] flex items-center justify-center p-[2px] shadow-sm">
+          <div class="w-full h-full bg-[#0A0A0C] rounded-full flex items-center justify-center text-[#E0BE4A]">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19.5 8.5c-.83 0-1.5.67-1.5 1.5v1.27l-6.72 6.72c-.78.78-2.05.78-2.83 0L3.5 13.04l1.41-1.41 4.95 4.95c.2.2.51.2.71 0l6.72-6.72c-.18-.25-.29-.55-.29-.86 0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+              <path d="M9.64 7.64c.2-.2.51-.2.71 0l3.71 3.71 1.41-1.41-3.71-3.71a2.49 2.49 0 00-3.54 0L3.29 11.16l1.41 1.41 4.94-4.93z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <h1 class="font-cinzel text-lg font-bold tracking-wider gold-text leading-none">SÓ BROTHERS</h1>
+          <span class="text-[10px] uppercase tracking-widest text-[#8F94A0] font-medium">Barbearia Premium</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="abrirModalPin()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#141518] border border-[#292C31] text-[11px] font-semibold text-[#E0BE4A] hover:border-[#E0BE4A] transition shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+          <span>Barbeiro</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================== -->
+  <!-- TELA 1: CAPA OFICIAL EM TELA CHEIA (LANDING SCREEN) -->
+  <!-- ========================================== -->
+  <section id="tela-home" class="landing-screen screen-fade-slide">
+    <div class="landing-viewport">
+      <!-- Imagem de Fundo Oficial (Capa Full Screen) -->
+      <img 
+        id="img-capa-oficial"
+        src="cover.jpeg" 
+        onerror="this.onerror=null; this.src='public/assets/aistudio/Gemini_Generated_Image_vzj3syvzj3syvzj3_0b80594e.jpeg';"
+        alt="Só Brothers Barbearia - Tradição, Estilo & Excelência" 
+        class="capa-img-bg"
+      />
+
+      <!-- Botão Funcional Sobreposto: AGENDAR HORÁRIO -->
+      <button 
+        id="btn-hotspot-agendar"
+        onclick="iniciarAgendamento()" 
+        aria-label="Agendar Horário na Barbearia Só Brothers com Mestre Victor"
+        title="Agendar Horário"
+        class="hotspot-agendar"
+      >
+        <span class="sr-only">Agendar Horário</span>
+      </button>
+
+      <!-- Área de Toque Sobreposta: ÁREA DO BARBEIRO (PIN 1920) -->
+      <button 
+        id="btn-hotspot-barbeiro"
+        onclick="abrirModalPin()" 
+        aria-label="Área do Barbeiro - Acesso Restrito via PIN"
+        title="Área do Barbeiro"
+        class="hotspot-barbeiro"
+      >
+        <span class="sr-only">Área do Barbeiro</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- CONTAINER DE TELAS SECUNDÁRIAS (SPA) -->
+  <main class="w-full max-w-md mx-auto px-4 py-5 flex-1 relative z-10">
+
+    <!-- ========================================== -->
+    <!-- TELA 2: FLUXO DE AGENDAMENTO SIMPLIFICADO -->
+    <!-- ========================================== -->
+    <section id="tela-fluxo" class="space-y-5 hidden screen-fade-slide">
+      
+      <!-- Stepper / Indicador de Passos -->
+      <div class="bg-card-custom p-3 rounded-xl flex items-center justify-between text-xs font-semibold shadow-md">
+        <div id="step-ind-1" class="flex items-center gap-1.5 text-[#E0BE4A] transition-colors">
+          <span class="w-5 h-5 rounded-full bg-[#E0BE4A] text-black flex items-center justify-center font-bold text-[11px] shadow-sm">1</span>
+          <span>Serviço</span>
+        </div>
+        <div class="w-6 h-px bg-[#292C31]"></div>
+        <div id="step-ind-2" class="flex items-center gap-1.5 text-gray-500 transition-colors">
+          <span class="w-5 h-5 rounded-full bg-[#292C31] text-gray-400 flex items-center justify-center font-bold text-[11px]">2</span>
+          <span>Dia & Horário</span>
+        </div>
+        <div class="w-6 h-px bg-[#292C31]"></div>
+        <div id="step-ind-3" class="flex items-center gap-1.5 text-gray-500 transition-colors">
+          <span class="w-5 h-5 rounded-full bg-[#292C31] text-gray-400 flex items-center justify-center font-bold text-[11px]">3</span>
+          <span>Confirmação</span>
+        </div>
+      </div>
+
+      <!-- ================= PASSO 1: TABELA DE SERVIÇOS E VALORES ATUALIZADOS ================= -->
+      <div id="passo-1" class="space-y-5">
+        <div class="flex items-center justify-between px-1">
+          <div>
+            <label class="block text-xs uppercase font-bold tracking-widest text-[#8F94A0]">
+              Escolha seu Serviço
+            </label>
+            <p class="text-xs text-gray-400">Atendimento exclusivo com <strong class="gold-text font-cinzel font-bold">Mestre Victor</strong></p>
+          </div>
+        </div>
+
+        <!-- Lista de Serviços Atualizados (Corte R$35, Barba R$20, Combo R$60) -->
+        <div class="space-y-3">
+          
+          <!-- 1. Corte Tradicional: R$ 35,00 (30 min) -->
+          <div id="card-servico-corte" onclick="selecionarServico('Corte Tradicional', 35, 30)" class="bg-card-custom p-4 rounded-xl cursor-pointer transition border hover:border-gray-500 flex items-center justify-between card-interactive stagger-item stagger-1">
+            <div class="flex items-center gap-3">
+              <div id="radio-servico-corte" class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center transition">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#E0BE4A] hidden"></div>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Corte Tradicional</h4>
+                <span class="text-xs text-[#8F94A0]">30 minutos de acabamento</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-cinzel font-extrabold text-[#E0BE4A] text-lg">R$ 35,00</span>
+            </div>
+          </div>
+
+          <!-- 2. Barba: R$ 20,00 (30 min) -->
+          <div id="card-servico-barba" onclick="selecionarServico('Barba', 20, 30)" class="bg-card-custom p-4 rounded-xl cursor-pointer transition border hover:border-gray-500 flex items-center justify-between card-interactive stagger-item stagger-2">
+            <div class="flex items-center gap-3">
+              <div id="radio-servico-barba" class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center transition">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#E0BE4A] hidden"></div>
+              </div>
+              <div>
+                <h4 class="font-semibold text-white text-sm">Barba</h4>
+                <span class="text-xs text-[#8F94A0]">30 minutos • Toalha quente & navalhete</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-cinzel font-extrabold text-[#E0BE4A] text-lg">R$ 20,00</span>
+            </div>
+          </div>
+
+          <!-- 3. Combo Cabelo & Barba: R$ 60,00 (60 min) -->
+          <div id="card-servico-combo" onclick="selecionarServico('Combo Cabelo & Barba', 60, 60)" class="bg-card-custom p-4 rounded-xl cursor-pointer transition border hover:border-gray-500 flex items-center justify-between card-interactive stagger-item stagger-3">
+            <div class="flex items-center gap-3">
+              <div id="radio-servico-combo" class="w-5 h-5 rounded-full border border-gray-600 flex items-center justify-center transition">
+                <div class="w-2.5 h-2.5 rounded-full bg-[#E0BE4A] hidden"></div>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h4 class="font-semibold text-white text-sm">Combo Cabelo & Barba</h4>
+                  <span class="text-[10px] bg-[#C9A227]/20 text-[#E0BE4A] px-1.5 py-0.5 rounded font-bold">Mais pedido</span>
+                </div>
+                <span class="text-xs text-[#8F94A0]">30 a 60 minutos • Cuidado completo</span>
+              </div>
+            </div>
+            <div class="text-right">
+              <span class="font-cinzel font-extrabold text-[#E0BE4A] text-lg">R$ 60,00</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Barra de Total e Estimativa -->
+        <div class="bg-[#141518] p-3.5 rounded-xl border border-[#292C31] flex items-center justify-between stagger-item stagger-4 shadow-md">
+          <div>
+            <span class="text-[11px] uppercase tracking-wider text-[#8F94A0] block">Tempo Estimado</span>
+            <span id="label-tempo-estimado" class="text-sm font-semibold text-white">30 minutos estimados</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[11px] uppercase tracking-wider text-[#8F94A0] block">Valor Total</span>
+            <span id="label-total-passo1" class="font-cinzel text-xl font-bold text-[#E0BE4A]">R$ 35,00</span>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex gap-2 stagger-item stagger-5">
+          <button onclick="navegarPara('home')" class="w-1/3 min-h-[50px] rounded-xl border border-[#292C31] bg-[#141518] text-gray-300 font-semibold hover:bg-[#1d1f24] transition text-sm card-interactive">
+            Voltar
+          </button>
+          <button id="btn-passo1-continuar" onclick="avancarParaPasso2()" class="btn-gold flex-1 rounded-xl text-base tracking-wider uppercase">
+            Continuar
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= PASSO 2: DIA & HORÁRIO ================= -->
+      <div id="passo-2" class="space-y-5 hidden">
+        <!-- Identificação da Agenda -->
+        <div class="bg-[#141518] px-3.5 py-2.5 rounded-xl border border-[#292C31] flex items-center justify-between shadow-md">
+          <div>
+            <span class="text-[10px] uppercase tracking-wider text-[#8F94A0] block">Profissional</span>
+            <span class="font-cinzel text-sm font-bold gold-text">Mestre Victor</span>
+          </div>
+          <div class="text-right">
+            <span class="text-[10px] uppercase tracking-wider text-[#8F94A0] block">Serviço</span>
+            <span id="passo2-nome-servico" class="text-xs font-semibold text-white">Corte Tradicional</span>
+          </div>
+        </div>
+
+        <!-- Seleção de Data -->
+        <div>
+          <label class="block text-xs uppercase font-bold tracking-widest text-[#8F94A0] mb-2">
+            1. Selecione a Data (Terça a Sábado)
+          </label>
+          <div class="space-y-2">
+            <input 
+              type="date" 
+              id="input-data-agendamento" 
+              onchange="onDataAlterada(this.value)"
+              class="w-full bg-[#141518] border border-[#292C31] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#C9A227] transition shadow-inner"
+            >
+            <!-- Pílulas de datas rápidas -->
+            <div id="datas-rapidas" class="flex gap-1.5 overflow-x-auto pb-1 pt-1">
+              <!-- Gerado via JS com animação escalonada -->
+            </div>
+          </div>
+          <p id="msg-erro-dia" class="text-xs text-amber-400 mt-1.5 hidden flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Fechado aos domingos e segundas. Escolha de terça a sábado!
+          </p>
+        </div>
+
+        <!-- Grade de Horários (10h às 19:30) -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs uppercase font-bold tracking-widest text-[#8F94A0]">
+              2. Escolha o Horário Disponível
+            </label>
+            <span class="text-[11px] text-[#A47B38]">Slots de 30 min</span>
+          </div>
+
+          <!-- Grade de Slots com Animação em Cascata -->
+          <div id="grade-slots" class="grid grid-cols-4 gap-2">
+            <!-- Slots renderizados dinamicamente via JS -->
+          </div>
+
+          <div id="msg-sem-horarios" class="hidden bg-[#141518] border border-dashed border-[#292C31] p-6 rounded-xl text-center text-sm text-[#8F94A0]">
+            Nenhum horário disponível para este dia na agenda do Mestre Victor.
+          </div>
+
+          <!-- Legenda -->
+          <div class="flex items-center justify-center gap-4 text-xs text-[#8F94A0] mt-3">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-[#141518] border border-[#292C31]"></span>
+              <span>Livre</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-[#E0BE4A]"></span>
+              <span class="text-white">Selecionado</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded bg-black/60 border border-[#292C31]/40 line-through"></span>
+              <span class="line-through text-gray-500">Ocupado</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex gap-2">
+          <button onclick="voltarParaPasso1()" class="w-1/3 min-h-[50px] rounded-xl border border-[#292C31] bg-[#141518] text-gray-300 font-semibold hover:bg-[#1d1f24] transition text-sm card-interactive">
+            Voltar
+          </button>
+          <button id="btn-passo2-continuar" onclick="avancarParaPasso3()" disabled class="btn-gold flex-1 rounded-xl text-base tracking-wider uppercase">
+            Continuar
+          </button>
+        </div>
+      </div>
+
+      <!-- ================= PASSO 3: FORMULÁRIO + FORMAS DE PAGAMENTO ================= -->
+      <div id="passo-3" class="space-y-5 hidden">
+        <!-- Card de Resumo Completo -->
+        <div class="bg-card-custom p-4 rounded-xl space-y-3 shadow-lg border border-[#292C31]">
+          <h4 class="font-cinzel text-sm font-bold tracking-wider gold-text border-b border-[#292C31] pb-2">
+            RESUMO DO AGENDAMENTO
+          </h4>
+
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between items-center">
+              <span class="text-[#8F94A0]">Profissional:</span>
+              <span class="font-cinzel font-bold gold-text">Mestre Victor</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[#8F94A0]">Serviço:</span>
+              <span id="resumo-servico" class="font-semibold text-white">Corte Tradicional</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[#8F94A0]">Data:</span>
+              <span id="resumo-data" class="font-semibold text-white">--/--/----</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[#8F94A0]">Horário:</span>
+              <span id="resumo-hora" class="font-semibold text-white">--:--</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-[#8F94A0]">Duração:</span>
+              <span id="resumo-duracao" class="text-xs text-[#8F94A0]">30 min</span>
+            </div>
+            <div class="pt-2 border-t border-[#292C31] flex justify-between items-center">
+              <span class="font-bold text-white">Total a pagar:</span>
+              <span id="resumo-total" class="font-cinzel font-bold text-lg text-[#E0BE4A]">R$ 35,00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formas de Pagamento com Efeito 3D (Hover & Tap) -->
+        <div class="bg-card-custom p-4 rounded-xl space-y-3 shadow-md border border-[#292C31]">
+          <label class="block text-xs uppercase font-bold tracking-widest text-[#8F94A0]">
+            Forma de Pagamento
+          </label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" id="pag-pix" onclick="selecionarPagamento('Pix')" class="card-interactive p-3 rounded-xl border border-[#292C31] bg-[#0A0A0C] text-center flex flex-col items-center justify-center gap-1.5 transition">
+              <svg class="w-5 h-5 text-[#E0BE4A]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.8l5.5 3.4L12 11.7 6.5 8.2 12 4.8zm-6 4.9l5 3.1v6.4l-5-3.1V9.7zm7 9.5v-6.4l5-3.1v6.4l-5 3.1z"/>
+              </svg>
+              <span class="text-xs font-bold text-white">PIX</span>
+            </button>
+
+            <button type="button" id="pag-cartao" onclick="selecionarPagamento('Cartão')" class="card-interactive p-3 rounded-xl border border-[#292C31] bg-[#0A0A0C] text-center flex flex-col items-center justify-center gap-1.5 transition">
+              <svg class="w-5 h-5 text-[#E0BE4A]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <rect x="2" y="5" width="20" height="14" rx="2"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+              <span class="text-xs font-bold text-white">Cartão</span>
+            </button>
+
+            <button type="button" id="pag-local" onclick="selecionarPagamento('No Local')" class="card-interactive p-3 rounded-xl border border-[#292C31] bg-[#0A0A0C] text-center flex flex-col items-center justify-center gap-1.5 transition">
+              <svg class="w-5 h-5 text-[#E0BE4A]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+              </svg>
+              <span class="text-xs font-bold text-white">No Local</span>
+            </button>
+          </div>
+          <p id="msg-pagamento-selecionado" class="text-[11px] text-[#A47B38] text-center mt-1 font-medium">
+            Pagamento presencial no estabelecimento após o atendimento.
+          </p>
+        </div>
+
+        <!-- Formulário do Cliente -->
+        <div class="bg-card-custom p-4 rounded-xl space-y-4 shadow-lg border border-[#292C31]">
+          <h4 class="text-xs uppercase font-bold tracking-widest text-[#8F94A0]">
+            Seus Dados de Contato
+          </h4>
+
+          <div>
+            <label class="block text-xs text-gray-300 font-medium mb-1">Nome Completo *</label>
+            <input 
+              type="text" 
+              id="cliente-nome" 
+              placeholder="Ex: João da Silva" 
+              class="w-full bg-[#0A0A0C] border border-[#292C31] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#C9A227] transition shadow-inner"
+              oninput="validarFormularioCliente()"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs text-gray-300 font-medium mb-1">WhatsApp (com DDD) *</label>
+            <input 
+              type="tel" 
+              id="cliente-whatsapp" 
+              placeholder="(11) 99999-9999" 
+              maxlength="15"
+              class="w-full bg-[#0A0A0C] border border-[#292C31] rounded-xl px-4 py-3 text-white text-base focus:outline-none focus:border-[#C9A227] transition shadow-inner"
+              oninput="mascaraWhatsApp(this); validarFormularioCliente();"
+            >
+            <span class="text-[11px] text-[#8F94A0] mt-1 block">
+              Mínimo 10 dígitos. Confirmação instantânea no WhatsApp.
+            </span>
+          </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="flex gap-2">
+          <button onclick="voltarParaPasso2()" class="w-1/3 min-h-[50px] rounded-xl border border-[#292C31] bg-[#141518] text-gray-300 font-semibold hover:bg-[#1d1f24] transition text-sm card-interactive">
+            Voltar
+          </button>
+          <button id="btn-confirmar-reserva" onclick="confirmarAgendamento()" disabled class="btn-gold flex-1 rounded-xl text-base tracking-wider uppercase">
+            Confirmar Reserva
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TELA 3: SUCESSO / CONFIRMAÇÃO -->
+    <!-- ========================================== -->
+    <section id="tela-sucesso" class="space-y-6 hidden text-center screen-fade-slide">
+      <div class="bg-card-custom p-6 rounded-2xl border border-[#292C31] space-y-4 shadow-xl card-interactive">
+        
+        <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-[#E0BE4A] to-[#A47B38] mx-auto flex items-center justify-center p-[2px] shadow-lg">
+          <div class="w-full h-full bg-[#0A0A0C] rounded-full flex items-center justify-center text-[#E0BE4A]">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 class="font-cinzel text-xl font-bold gold-text">AGENDAMENTO REALIZADO!</h3>
+        <p class="text-sm text-[#A0A5B1]">
+          Sua reserva com <strong class="text-white">Mestre Victor</strong> foi registrada. Clique abaixo para enviar a confirmação para a barbearia via WhatsApp.
+        </p>
+
+        <div id="sucesso-detalhes" class="bg-[#0A0A0C] p-3.5 rounded-xl border border-[#292C31] text-xs text-left space-y-1.5 text-gray-300 shadow-inner">
+          <!-- Preenchido via JS -->
+        </div>
+
+        <a id="link-whatsapp-reserva" href="#" target="_blank" class="btn-gold w-full rounded-xl flex items-center justify-center gap-2 text-base font-bold uppercase tracking-wider block shadow-xl">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.585 1.961.905 3.011.905h.005c3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.767-5.769-5.767zm7.502 5.766c-.001 4.14-3.368 7.508-7.506 7.508-1.309 0-2.58-.339-3.7-.981l-4.133 1.084 1.103-4.032c-.722-1.183-1.103-2.544-1.104-3.939 0-4.14 3.367-7.508 7.506-7.508 4.139 0 7.506 3.368 7.506 7.508z"/>
+          </svg>
+          <span>Abrir no WhatsApp</span>
+        </a>
+      </div>
+
+      <button onclick="novoAgendamento()" class="w-full min-h-[50px] rounded-xl border border-[#292C31] bg-[#141518] text-white font-semibold hover:bg-[#1d1f24] transition text-sm card-interactive">
+        Fazer Outro Agendamento
+      </button>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TELA 4: PAINEL DO BARBEIRO (ADMIN) -->
+    <!-- ========================================== -->
+    <section id="tela-admin" class="space-y-5 hidden screen-fade-slide">
+      <div class="flex items-center justify-between border-b border-[#292C31] pb-3">
+        <div>
+          <h3 class="font-cinzel text-lg font-bold gold-text">PAINEL DO BARBEIRO</h3>
+          <span class="text-xs text-[#8F94A0]">Agenda de <strong class="text-white">Mestre Victor</strong></span>
+        </div>
+        <button onclick="navegarPara('home')" class="text-xs bg-[#141518] border border-[#292C31] px-3 py-1.5 rounded-lg text-gray-300 hover:text-white transition card-interactive">
+          Voltar ao Início
+        </button>
+      </div>
+
+      <div class="bg-card-custom p-3.5 rounded-xl border border-[#292C31] flex items-center justify-between shadow-md">
+        <div>
+          <span class="text-[10px] uppercase tracking-widest text-[#8F94A0] block">Profissional Ativo</span>
+          <span class="font-cinzel text-base font-bold gold-text">Mestre Victor</span>
+        </div>
+        <div class="text-right">
+          <span class="text-[10px] uppercase tracking-widest text-[#8F94A0] block">Atendimentos</span>
+          <span id="admin-total-contador" class="text-base font-bold text-white">0</span>
+        </div>
+      </div>
+
+      <!-- Lista de Agendamentos -->
+      <div id="admin-lista-agendamentos" class="space-y-3">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <div id="admin-vazio" class="hidden bg-[#141518] border border-dashed border-[#292C31] p-8 rounded-xl text-center space-y-2">
+        <div class="w-10 h-10 rounded-full bg-[#292C31] text-gray-400 mx-auto flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <p class="text-sm font-medium text-white">Nenhum atendimento marcado</p>
+        <p class="text-xs text-[#8F94A0]">A agenda do Mestre Victor está livre para novos clientes.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL DE BLOQUEIO POR PIN (ÁREA DO BARBEIRO) -->
+  <!-- ========================================== -->
+  <div id="modal-pin" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden">
+    <div id="card-pin" class="w-full max-w-xs bg-[#141518] border border-[#292C31] rounded-2xl p-6 text-center space-y-4 shadow-2xl relative">
+      
+      <!-- Botão Fechar Modal -->
+      <button onclick="fecharModalPin()" class="absolute top-3 right-3 text-gray-400 hover:text-white p-1">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+
+      <!-- Ícone Cadeado Dourado -->
+      <div class="w-14 h-14 rounded-full bg-[#0A0A0C] border border-[#C9A227]/40 text-[#E0BE4A] mx-auto flex items-center justify-center shadow-lg">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+
+      <div>
+        <h4 class="font-cinzel text-base font-bold gold-text">ACESSO RESTRITO</h4>
+        <p class="text-xs text-gray-400 mt-1">Digite o PIN do Barbeiro para gerenciar a agenda</p>
+      </div>
+
+      <!-- Campo de PIN -->
+      <div class="space-y-2">
+        <input 
+          type="password" 
+          id="input-pin-barbeiro" 
+          maxlength="4" 
+          inputmode="numeric"
+          pattern="[0-9]*"
+          placeholder="••••" 
+          class="w-full tracking-[0.5em] text-center bg-[#0A0A0C] border border-[#292C31] rounded-xl px-4 py-3 text-2xl font-bold text-[#E0BE4A] focus:outline-none focus:border-[#C9A227] transition shadow-inner"
+          onkeydown="if(event.key==='Enter') validarPin();"
+        >
+        <p id="msg-erro-pin" class="text-xs text-rose-400 font-semibold hidden flex items-center justify-center gap-1.5">
+          <svg class="w-3.5 h-3.5 inline text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          PIN incorreto. Tente novamente
+        </p>
+      </div>
+
+      <!-- Teclado Numérico Rápido -->
+      <div class="grid grid-cols-3 gap-2 pt-1">
+        <button type="button" onclick="digitarPin('1')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">1</button>
+        <button type="button" onclick="digitarPin('2')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">2</button>
+        <button type="button" onclick="digitarPin('3')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">3</button>
+        <button type="button" onclick="digitarPin('4')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">4</button>
+        <button type="button" onclick="digitarPin('5')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">5</button>
+        <button type="button" onclick="digitarPin('6')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">6</button>
+        <button type="button" onclick="digitarPin('7')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">7</button>
+        <button type="button" onclick="digitarPin('8')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">8</button>
+        <button type="button" onclick="digitarPin('9')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">9</button>
+        <button type="button" onclick="limparPin()" class="py-2.5 rounded-lg bg-[#0A0A0C] text-sm font-semibold text-rose-400 border border-[#292C31] active:scale-95 transition">C</button>
+        <button type="button" onclick="digitarPin('0')" class="py-2.5 rounded-lg bg-[#0A0A0C] text-lg font-bold text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/40 active:scale-95 transition">0</button>
+        <button type="button" onclick="apagarDigitoPin()" class="py-2.5 rounded-lg bg-[#0A0A0C] text-gray-400 border border-[#292C31] flex items-center justify-center active:scale-95 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414-6.414a2 2 0 011.414-.586H19a2 2 0 012 2v10a2 2 0 01-2 2h-8.172a2 2 0 01-1.414-.586L3 12z"/></svg>
+        </button>
+      </div>
+
+      <!-- Botão Entrar -->
+      <button onclick="validarPin()" class="btn-gold w-full rounded-xl text-sm font-bold uppercase tracking-wider py-3">
+        Validar e Acessar
+      </button>
+    </div>
+  </div>
+
+  <!-- RODAPÉ FIXO (Disponível nas telas secundárias) -->
+  <footer id="footer-global" class="fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0C]/95 backdrop-blur border-t border-[#292C31] hidden">
+    <div class="max-w-md mx-auto px-4 py-2.5 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#E0BE4A]"></span>
+        <span class="text-xs text-gray-400 font-medium">Só Brothers • Mestre Victor</span>
+      </div>
+      
+      <button onclick="abrirModalPin()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#141518] border border-[#292C31] text-xs font-semibold text-[#E0BE4A] hover:border-[#E0BE4A]/50 transition card-interactive">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+        <span>Painel do Barbeiro</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT PURO -->
+  <!-- ========================================== -->
+  <script>
+    const HORARIOS_SLOTS = [
+      "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+      "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+      "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
+      "19:00", "19:30"
+    ];
+
+    const CHAVE_STORAGE = "sobre-viventes";
+    const WHATSAPP_BARBEARIA = "5511999999999";
+    const NOME_PROFISSIONAL = "Mestre Victor";
+    const PIN_CORRETO = "1920";
+
+    // Estado da aplicação com valores atualizados
+    let agendamentoAtual = {
+      barbeiro: NOME_PROFISSIONAL,
+      servico: "Corte Tradicional",
+      preco: 35,
+      duracao: 30,
+      data: "",
+      hora: "",
+      formaPagamento: "No Local",
+      nome: "",
+      whatsapp: ""
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      inicializarStorage();
+      configurarDatas();
+      selecionarServico("Corte Tradicional", 35, 30);
+      selecionarPagamento("No Local");
+      navegarPara("home");
+    });
+
+    function inicializarStorage() {
+      const salvo = localStorage.getItem(CHAVE_STORAGE);
+      if (!salvo) {
+        const hoje = new Date();
+        const dataStr = formatarDataISO(obterProximoDiaValido(hoje));
+        const demo = [
+          {
+            id: "ag_demo_1",
+            barbeiro: NOME_PROFISSIONAL,
+            servico: "Corte Tradicional",
+            preco: 35,
+            data: dataStr,
+            hora: "14:00",
+            formaPagamento: "PIX",
+            nome: "Carlos Eduardo",
+            whatsapp: "11988887777",
+            status: "confirmado"
+          },
+          {
+            id: "ag_demo_2",
+            barbeiro: NOME_PROFISSIONAL,
+            servico: "Combo Cabelo & Barba",
+            preco: 60,
+            data: dataStr,
+            hora: "16:30",
+            formaPagamento: "Cartão",
+            nome: "Felipe Ramos",
+            whatsapp: "11977776666",
+            status: "confirmado"
+          }
+        ];
+        localStorage.setItem(CHAVE_STORAGE, JSON.stringify(demo));
+      } else {
+        try {
+          const dados = JSON.parse(salvo);
+          let atualizou = false;
+          dados.forEach(item => {
+            if (item.barbeiro !== NOME_PROFISSIONAL) {
+              item.barbeiro = NOME_PROFISSIONAL;
+              atualizou = true;
+            }
+          });
+          if (atualizou) {
+            localStorage.setItem(CHAVE_STORAGE, JSON.stringify(dados));
+          }
+        } catch (e) {}
+      }
+    }
+
+    function obterAgendamentos() {
+      try {
+        const dados = localStorage.getItem(CHAVE_STORAGE);
+        return dados ? JSON.parse(dados) : [];
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function salvarAgendamentos(lista) {
+      localStorage.setItem(CHAVE_STORAGE, JSON.stringify(lista));
+    }
+
+    // Navegação SPA
+    function navegarPara(telaId) {
+      const telas = ["tela-home", "tela-fluxo", "tela-sucesso", "tela-admin"];
+      telas.forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.add("hidden");
+        el.classList.remove("screen-fade-slide");
+      });
+
+      const header = document.getElementById("header-global");
+      const footer = document.getElementById("footer-global");
+
+      let alvo = null;
+      if (telaId === "home") {
+        alvo = document.getElementById("tela-home");
+        header.classList.add("hidden");
+        footer.classList.add("hidden");
+      } else if (telaId === "fluxo") {
+        alvo = document.getElementById("tela-fluxo");
+        header.classList.remove("hidden");
+        footer.classList.remove("hidden");
+      } else if (telaId === "sucesso") {
+        alvo = document.getElementById("tela-sucesso");
+        header.classList.remove("hidden");
+        footer.classList.remove("hidden");
+      } else if (telaId === "admin") {
+        alvo = document.getElementById("tela-admin");
+        header.classList.remove("hidden");
+        footer.classList.remove("hidden");
+        carregarPainelAdmin();
+      }
+
+      if (alvo) {
+        alvo.classList.remove("hidden");
+        void alvo.offsetWidth;
+        alvo.classList.add("screen-fade-slide");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function iniciarAgendamento() {
+      const home = document.getElementById("tela-home");
+      const hotspot = document.getElementById("btn-hotspot-agendar");
+      
+      if (hotspot) {
+        hotspot.style.transform = "translateX(-50%) translateY(1px) scale(0.97)";
+      }
+
+      // Transição suave (Fade & Slide) ao sair da Capa oficial
+      home.style.transition = "opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1)";
+      home.style.opacity = "0";
+      home.style.transform = "translateY(-16px) scale(0.98)";
+
+      setTimeout(() => {
+        navegarPara("fluxo");
+        mostrarPasso(1);
+
+        // Reset dos estilos inline da tela home para navegações futuras
+        home.style.opacity = "";
+        home.style.transform = "";
+        home.style.transition = "";
+        if (hotspot) hotspot.style.transform = "";
+      }, 260);
+    }
+
+    // Modal de PIN do Barbeiro
+    function abrirModalPin() {
+      const modal = document.getElementById("modal-pin");
+      const input = document.getElementById("input-pin-barbeiro");
+      const msgErro = document.getElementById("msg-erro-pin");
+      input.value = "";
+      msgErro.classList.add("hidden");
+      modal.classList.remove("hidden");
+      setTimeout(() => input.focus(), 150);
+    }
+
+    function fecharModalPin() {
+      document.getElementById("modal-pin").classList.add("hidden");
+      document.getElementById("input-pin-barbeiro").value = "";
+    }
+
+    function digitarPin(digito) {
+      const input = document.getElementById("input-pin-barbeiro");
+      if (input.value.length < 4) {
+        input.value += digito;
+      }
+      if (input.value.length === 4) {
+        validarPin();
+      }
+    }
+
+    function apagarDigitoPin() {
+      const input = document.getElementById("input-pin-barbeiro");
+      input.value = input.value.slice(0, -1);
+      document.getElementById("msg-erro-pin").classList.add("hidden");
+    }
+
+    function limparPin() {
+      const input = document.getElementById("input-pin-barbeiro");
+      input.value = "";
+      document.getElementById("msg-erro-pin").classList.add("hidden");
+    }
+
+    function validarPin() {
+      const input = document.getElementById("input-pin-barbeiro");
+      const msgErro = document.getElementById("msg-erro-pin");
+      const card = document.getElementById("card-pin");
+
+      if (input.value === PIN_CORRETO) {
+        fecharModalPin();
+        navegarPara("admin");
+      } else {
+        msgErro.classList.remove("hidden");
+        card.classList.add("shake");
+        setTimeout(() => card.classList.remove("shake"), 400);
+        input.value = "";
+        input.focus();
+      }
+    }
+
+    // Controle dos Passos
+    function mostrarPasso(passo) {
+      const passos = ["passo-1", "passo-2", "passo-3"];
+      passos.forEach(p => {
+        const el = document.getElementById(p);
+        el.classList.add("hidden");
+        el.classList.remove("screen-fade-slide");
+      });
+
+      const ind1 = document.getElementById("step-ind-1");
+      const ind2 = document.getElementById("step-ind-2");
+      const ind3 = document.getElementById("step-ind-3");
+
+      ind1.className = "flex items-center gap-1.5 text-gray-500 transition-colors";
+      ind1.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#292C31] text-gray-400 flex items-center justify-center font-bold text-[11px]";
+
+      ind2.className = "flex items-center gap-1.5 text-gray-500 transition-colors";
+      ind2.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#292C31] text-gray-400 flex items-center justify-center font-bold text-[11px]";
+
+      ind3.className = "flex items-center gap-1.5 text-gray-500 transition-colors";
+      ind3.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#292C31] text-gray-400 flex items-center justify-center font-bold text-[11px]";
+
+      let atual = null;
+      if (passo === 1) {
+        atual = document.getElementById("passo-1");
+        ind1.className = "flex items-center gap-1.5 text-[#E0BE4A] transition-colors";
+        ind1.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#E0BE4A] text-black flex items-center justify-center font-bold text-[11px] shadow-sm";
+      } else if (passo === 2) {
+        atual = document.getElementById("passo-2");
+        ind2.className = "flex items-center gap-1.5 text-[#E0BE4A] transition-colors";
+        ind2.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#E0BE4A] text-black flex items-center justify-center font-bold text-[11px] shadow-sm";
+        document.getElementById("passo2-nome-servico").innerText = agendamentoAtual.servico;
+        renderizarSlots();
+      } else if (passo === 3) {
+        atual = document.getElementById("passo-3");
+        ind3.className = "flex items-center gap-1.5 text-[#E0BE4A] transition-colors";
+        ind3.querySelector("span:first-child").className = "w-5 h-5 rounded-full bg-[#E0BE4A] text-black flex items-center justify-center font-bold text-[11px] shadow-sm";
+        atualizarResumoFinal();
+      }
+
+      if (atual) {
+        atual.classList.remove("hidden");
+        void atual.offsetWidth;
+        atual.classList.add("screen-fade-slide");
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // PASSO 1: Selecionar Serviço com Valores Atualizados
+    function selecionarServico(nome, preco, duracao) {
+      agendamentoAtual.barbeiro = NOME_PROFISSIONAL;
+      agendamentoAtual.servico = nome;
+      agendamentoAtual.preco = preco;
+      agendamentoAtual.duracao = duracao;
+
+      const cardCorte = document.getElementById("card-servico-corte");
+      const cardBarba = document.getElementById("card-servico-barba");
+      const cardCombo = document.getElementById("card-servico-combo");
+
+      const radioCorte = document.querySelector("#radio-servico-corte div");
+      const radioBarba = document.querySelector("#radio-servico-barba div");
+      const radioCombo = document.querySelector("#radio-servico-combo div");
+
+      [cardCorte, cardBarba, cardCombo].forEach(c => {
+        c.classList.remove("gold-border", "gold-glow");
+        c.classList.add("border-[#292C31]");
+      });
+
+      [radioCorte, radioBarba, radioCombo].forEach(r => r.classList.add("hidden"));
+
+      if (nome === "Corte Tradicional") {
+        cardCorte.classList.add("gold-border", "gold-glow");
+        radioCorte.classList.remove("hidden");
+      } else if (nome === "Barba") {
+        cardBarba.classList.add("gold-border", "gold-glow");
+        radioBarba.classList.remove("hidden");
+      } else if (nome.includes("Combo")) {
+        cardCombo.classList.add("gold-border", "gold-glow");
+        radioCombo.classList.remove("hidden");
+      }
+
+      document.getElementById("label-tempo-estimado").innerText = duracao + " minutos estimados";
+      document.getElementById("label-total-passo1").innerText = "R$ " + preco.toFixed(2).replace('.', ',');
+
+      const btn = document.getElementById("btn-passo1-continuar");
+      btn.removeAttribute("disabled");
+    }
+
+    function avancarParaPasso2() {
+      mostrarPasso(2);
+    }
+
+    function voltarParaPasso1() {
+      mostrarPasso(1);
+    }
+
+    // PASSO 2: Configuração de Datas (Terça a Sábado)
+    function obterProximoDiaValido(dataBase) {
+      let d = new Date(dataBase);
+      const diaSemana = d.getDay();
+      if (diaSemana === 0) {
+        d.setDate(d.getDate() + 2);
+      } else if (diaSemana === 1) {
+        d.setDate(d.getDate() + 1);
+      }
+      return d;
+    }
+
+    function formatarDataISO(data) {
+      const a = data.getFullYear();
+      const m = String(data.getMonth() + 1).padStart(2, "0");
+      const d = String(data.getDate()).padStart(2, "0");
+      return `${a}-${m}-${d}`;
+    }
+
+    function formatarDataBR(isoStr) {
+      if (!isoStr) return "";
+      const partes = isoStr.split("-");
+      if (partes.length === 3) {
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+      }
+      return isoStr;
+    }
+
+    function isDiaValido(dataISO) {
+      if (!dataISO) return false;
+      const partes = dataISO.split("-");
+      const d = new Date(partes[0], partes[1] - 1, partes[2]);
+      const diaSemana = d.getDay();
+      return diaSemana >= 2 && diaSemana <= 6;
+    }
+
+    function configurarDatas() {
+      const hoje = new Date();
+      const primeiroDia = obterProximoDiaValido(hoje);
+      const isoInicial = formatarDataISO(primeiroDia);
+
+      const inputData = document.getElementById("input-data-agendamento");
+      inputData.value = isoInicial;
+      inputData.min = formatarDataISO(hoje);
+      agendamentoAtual.data = isoInicial;
+
+      const containerRapidas = document.getElementById("datas-rapidas");
+      containerRapidas.innerHTML = "";
+
+      let contadorDiasValidos = 0;
+      let diaCursor = new Date(hoje);
+      const nomesDias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
+      while (contadorDiasValidos < 5) {
+        const diaSemana = diaCursor.getDay();
+        if (diaSemana >= 2 && diaSemana <= 6) {
+          const iso = formatarDataISO(diaCursor);
+          const diaMes = diaCursor.getDate();
+          const mesNome = diaCursor.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '');
+          const labelDia = `${nomesDias[diaSemana]}, ${diaMes} ${mesNome}`;
+
+          const btnPilula = document.createElement("button");
+          btnPilula.type = "button";
+          btnPilula.className = `shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold border transition card-interactive stagger-item ${
+            iso === isoInicial 
+              ? "bg-[#E0BE4A] text-black border-[#E0BE4A] shadow-md font-bold" 
+              : "bg-[#141518] text-gray-300 border-[#292C31] hover:border-gray-500"
+          }`;
+          btnPilula.style.animationDelay = `${(contadorDiasValidos + 1) * 50}ms`;
+          btnPilula.innerText = labelDia;
+          btnPilula.onclick = () => {
+            inputData.value = iso;
+            onDataAlterada(iso);
+          };
+          btnPilula.dataset.iso = iso;
+          containerRapidas.appendChild(btnPilula);
+
+          contadorDiasValidos++;
+        }
+        diaCursor.setDate(diaCursor.getDate() + 1);
+      }
+    }
+
+    function onDataAlterada(novaData) {
+      agendamentoAtual.data = novaData;
+      agendamentoAtual.hora = "";
+      document.getElementById("btn-passo2-continuar").setAttribute("disabled", "true");
+
+      const msgErro = document.getElementById("msg-erro-dia");
+      if (!isDiaValido(novaData)) {
+        msgErro.classList.remove("hidden");
+        document.getElementById("grade-slots").innerHTML = "";
+        document.getElementById("msg-sem-horarios").classList.remove("hidden");
+        return;
+      } else {
+        msgErro.classList.add("hidden");
+      }
+
+      const pilulas = document.querySelectorAll("#datas-rapidas button");
+      pilulas.forEach(p => {
+        if (p.dataset.iso === novaData) {
+          p.className = "shrink-0 px-3 py-1.5 rounded-lg text-xs font-bold border transition bg-[#E0BE4A] text-black border-[#E0BE4A] shadow-md card-interactive";
+        } else {
+          p.className = "shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold border transition bg-[#141518] text-gray-300 border-[#292C31] hover:border-gray-500 card-interactive";
+        }
+      });
+
+      renderizarSlots();
+    }
+
+    function renderizarSlots() {
+      const container = document.getElementById("grade-slots");
+      const msgVazio = document.getElementById("msg-sem-horarios");
+      container.innerHTML = "";
+
+      if (!isDiaValido(agendamentoAtual.data)) {
+        msgVazio.classList.remove("hidden");
+        return;
+      }
+
+      const agendamentos = obterAgendamentos();
+      const ocupados = agendamentos
+        .filter(a => a.data === agendamentoAtual.data && a.status !== 'cancelado')
+        .map(a => a.hora);
+
+      let slotsLivresContador = 0;
+
+      HORARIOS_SLOTS.forEach((horario, index) => {
+        const estaOcupado = ocupados.includes(horario);
+        const estaSelecionado = (agendamentoAtual.hora === horario);
+
+        const btnSlot = document.createElement("button");
+        btnSlot.type = "button";
+
+        const delayMs = Math.min((index + 1) * 35, 600);
+        btnSlot.style.animationDelay = `${delayMs}ms`;
+
+        if (estaOcupado) {
+          btnSlot.className = "py-2.5 px-1 rounded-xl text-xs font-semibold bg-black/50 text-gray-600 border border-[#292C31]/40 line-through cursor-not-allowed select-none stagger-item";
+          btnSlot.disabled = true;
+          btnSlot.innerHTML = `<span>${horario}</span>`;
+        } else {
+          slotsLivresContador++;
+          if (estaSelecionado) {
+            btnSlot.className = "slot-interactive py-2.5 px-1 rounded-xl text-xs font-bold bg-[#E0BE4A] text-black border border-[#E0BE4A] shadow-lg scale-[1.02] stagger-item";
+          } else {
+            btnSlot.className = "slot-interactive py-2.5 px-1 rounded-xl text-xs font-semibold bg-[#141518] text-gray-200 border border-[#292C31] hover:border-[#E0BE4A]/70 stagger-item";
+          }
+
+          btnSlot.onclick = () => {
+            selecionarHorario(horario);
+          };
+          btnSlot.innerHTML = `<span>${horario}</span>`;
+        }
+
+        container.appendChild(btnSlot);
+      });
+
+      if (slotsLivresContador === 0) {
+        msgVazio.classList.remove("hidden");
+      } else {
+        msgVazio.classList.add("hidden");
+      }
+    }
+
+    function selecionarHorario(horario) {
+      agendamentoAtual.hora = horario;
+      renderizarSlots();
+      document.getElementById("btn-passo2-continuar").removeAttribute("disabled");
+    }
+
+    function avancarParaPasso3() {
+      if (!agendamentoAtual.hora) return;
+      mostrarPasso(3);
+    }
+
+    function voltarParaPasso2() {
+      mostrarPasso(2);
+    }
+
+    // PASSO 3: Formas de Pagamento
+    function selecionarPagamento(tipo) {
+      agendamentoAtual.formaPagamento = tipo;
+      const bPix = document.getElementById("pag-pix");
+      const bCartao = document.getElementById("pag-cartao");
+      const bLocal = document.getElementById("pag-local");
+      const msg = document.getElementById("msg-pagamento-selecionado");
+
+      [bPix, bCartao, bLocal].forEach(b => {
+        b.classList.remove("gold-border", "gold-glow", "bg-[#C9A227]/15");
+        b.classList.add("border-[#292C31]");
+      });
+
+      if (tipo === "Pix") {
+        bPix.classList.add("gold-border", "gold-glow", "bg-[#C9A227]/15");
+        msg.innerText = "Chave Pix instantânea será gerada no atendimento.";
+      } else if (tipo === "Cartão") {
+        bCartao.classList.add("gold-border", "gold-glow", "bg-[#C9A227]/15");
+        msg.innerText = "Aceitamos Crédito e Débito (aproximação e chip).";
+      } else {
+        bLocal.classList.add("gold-border", "gold-glow", "bg-[#C9A227]/15");
+        msg.innerText = "Pagamento presencial no estabelecimento após o atendimento.";
+      }
+    }
+
+    // PASSO 3: Resumo e Formulário
+    function atualizarResumoFinal() {
+      document.getElementById("resumo-servico").innerText = agendamentoAtual.servico;
+      document.getElementById("resumo-data").innerText = formatarDataBR(agendamentoAtual.data);
+      document.getElementById("resumo-hora").innerText = agendamentoAtual.hora + "h";
+      document.getElementById("resumo-duracao").innerText = agendamentoAtual.duracao + " minutos";
+      document.getElementById("resumo-total").innerText = "R$ " + agendamentoAtual.preco.toFixed(2).replace('.', ',');
+      validarFormularioCliente();
+    }
+
+    function mascaraWhatsApp(input) {
+      let v = input.value.replace(/\D/g, "");
+      if (v.length > 11) v = v.slice(0, 11);
+
+      if (v.length > 10) {
+        v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+      } else if (v.length > 5) {
+        v = v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+      } else if (v.length > 2) {
+        v = v.replace(/^(\d{2})(\d{0,5})$/, "($1) $2");
+      }
+      input.value = v;
+    }
+
+    function validarFormularioCliente() {
+      const nome = document.getElementById("cliente-nome").value.trim();
+      const whatsapp = document.getElementById("cliente-whatsapp").value.replace(/\D/g, "");
+      const btn = document.getElementById("btn-confirmar-reserva");
+
+      if (nome.length >= 3 && whatsapp.length >= 10) {
+        btn.removeAttribute("disabled");
+      } else {
+        btn.setAttribute("disabled", "true");
+      }
+    }
+
+    // CONFIRMAR AGENDAMENTO
+    function confirmarAgendamento() {
+      const nome = document.getElementById("cliente-nome").value.trim();
+      const whatsapp = document.getElementById("cliente-whatsapp").value.trim();
+      const whatsappDigitos = whatsapp.replace(/\D/g, "");
+
+      if (nome.length < 3 || whatsappDigitos.length < 10) {
+        alert("Por favor, preencha seu nome e um número de WhatsApp válido.");
+        return;
+      }
+
+      agendamentoAtual.nome = nome;
+      agendamentoAtual.whatsapp = whatsapp;
+
+      const lista = obterAgendamentos();
+
+      const jaOcupado = lista.some(a => 
+        a.data === agendamentoAtual.data && 
+        a.hora === agendamentoAtual.hora &&
+        a.status !== 'cancelado'
+      );
+
+      if (jaOcupado) {
+        alert("Ops! Este horário acabou de ser reservado. Por favor, escolha outro horário.");
+        voltarParaPasso2();
+        return;
+      }
+
+      const novoRegistro = {
+        id: "ag_" + Date.now(),
+        barbeiro: NOME_PROFISSIONAL,
+        servico: agendamentoAtual.servico,
+        preco: agendamentoAtual.preco,
+        data: agendamentoAtual.data,
+        hora: agendamentoAtual.hora,
+        formaPagamento: agendamentoAtual.formaPagamento,
+        nome: agendamentoAtual.nome,
+        whatsapp: agendamentoAtual.whatsapp,
+        status: "confirmado"
+      };
+
+      lista.push(novoRegistro);
+      salvarAgendamentos(lista);
+
+      const dataFormatada = formatarDataBR(agendamentoAtual.data);
+      const mensagem = `Olá! Gostaria de confirmar meu agendamento.\nBarbeiro: ${NOME_PROFISSIONAL}\nServiço: ${agendamentoAtual.servico} (R$ ${agendamentoAtual.preco},00)\nData: ${dataFormatada}\nHorário: ${agendamentoAtual.hora}\nPagamento: ${agendamentoAtual.formaPagamento}\nNome: ${agendamentoAtual.nome}`;
+      const urlWhatsApp = `https://wa.me/${WHATSAPP_BARBEARIA}?text=${encodeURIComponent(mensagem)}`;
+
+      const containerDetalhes = document.getElementById("sucesso-detalhes");
+      containerDetalhes.innerHTML = `
+        <div class="flex justify-between"><span class="text-gray-400">Profissional:</span> <span class="font-cinzel font-bold gold-text">${NOME_PROFISSIONAL}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Serviço:</span> <span class="text-white">${agendamentoAtual.servico}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Data e Horário:</span> <span class="text-[#E0BE4A] font-bold">${dataFormatada} às ${agendamentoAtual.hora}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Pagamento:</span> <span class="text-white">${agendamentoAtual.formaPagamento}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Cliente:</span> <span class="text-white">${agendamentoAtual.nome}</span></div>
+        <div class="flex justify-between"><span class="text-gray-400">Total:</span> <span class="font-cinzel text-[#E0BE4A] font-bold">R$ ${agendamentoAtual.preco.toFixed(2).replace('.', ',')}</span></div>
+      `;
+
+      const linkBtn = document.getElementById("link-whatsapp-reserva");
+      linkBtn.href = urlWhatsApp;
+
+      navegarPara("sucesso");
+
+      try {
+        window.open(urlWhatsApp, "_blank");
+      } catch (e) {}
+    }
+
+    function novoAgendamento() {
+      agendamentoAtual.hora = "";
+      document.getElementById("cliente-nome").value = "";
+      document.getElementById("cliente-whatsapp").value = "";
+      navegarPara("home");
+    }
+
+    // PAINEL DO BARBEIRO (ADMIN) - MESTRE VICTOR
+    function carregarPainelAdmin() {
+      const lista = obterAgendamentos();
+      const filtrados = lista
+        .filter(a => a.status !== 'cancelado')
+        .sort((a, b) => (a.data + a.hora).localeCompare(b.data + b.hora));
+
+      document.getElementById("admin-total-contador").innerText = filtrados.length;
+
+      const container = document.getElementById("admin-lista-agendamentos");
+      const msgVazio = document.getElementById("admin-vazio");
+      container.innerHTML = "";
+
+      if (filtrados.length === 0) {
+        msgVazio.classList.remove("hidden");
+        return;
+      }
+
+      msgVazio.classList.add("hidden");
+
+      filtrados.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "bg-card-custom p-4 rounded-xl border border-[#292C31] space-y-2.5 relative card-interactive stagger-item shadow-md";
+        card.style.animationDelay = `${Math.min((index + 1) * 50, 400)}ms`;
+
+        const dataFormatada = formatarDataBR(item.data);
+        const numeroLimpo = item.whatsapp.replace(/\D/g, "");
+        const pag = item.formaPagamento || "Presencial";
+        const valor = item.preco ? `R$ ${item.preco},00` : "";
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-[#0A0A0C] border border-[#292C31] text-[#E0BE4A]">
+              ${dataFormatada} • ${item.hora}
+            </span>
+            <span class="text-[11px] font-semibold text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 px-2 py-0.5 rounded-full">
+              ${pag} • Confirmado
+            </span>
+          </div>
+
+          <div class="text-sm">
+            <div class="flex justify-between items-baseline">
+              <h5 class="font-bold text-white text-base">${item.nome}</h5>
+              <span class="font-cinzel text-xs text-[#E0BE4A] font-bold">${valor}</span>
+            </div>
+            <p class="text-xs text-[#8F94A0] mt-0.5">${item.servico}</p>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-[#292C31] text-xs">
+            <a href="https://wa.me/55${numeroLimpo}" target="_blank" class="text-[#E0BE4A] hover:underline flex items-center gap-1 font-medium">
+              <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.585 1.961.905 3.011.905h.005c3.18 0 5.767-2.587 5.768-5.766 0-3.181-2.587-5.767-5.769-5.767zm7.502 5.766c-.001 4.14-3.368 7.508-7.506 7.508-1.309 0-2.58-.339-3.7-.981l-4.133 1.084 1.103-4.032c-.722-1.183-1.103-2.544-1.104-3.939 0-4.14 3.367-7.508 7.506-7.508 4.139 0 7.506 3.368 7.506 7.508z"/></svg>
+              <span>${item.whatsapp}</span>
+            </a>
+
+            <button onclick="cancelarAtendimento('${item.id}')" class="px-2.5 py-1 rounded bg-rose-950/30 border border-rose-800/40 text-rose-300 hover:bg-rose-900/40 transition font-medium">
+              Liberar/Cancelar
+            </button>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    function cancelarAtendimento(id) {
+      if (confirm("Deseja realmente cancelar este agendamento e liberar o horário na agenda do Mestre Victor?")) {
+        let lista = obterAgendamentos();
+        lista = lista.filter(item => item.id !== id);
+        salvarAgendamentos(lista);
+        carregarPainelAdmin();
+      }
+    }
+  </script>
+</body>
+</html>

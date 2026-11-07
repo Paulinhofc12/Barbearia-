@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Golden Barber Scissors / Blades Emblem -->
+    <path
+        android:pathData="M38,32 C33.6,32 30,35.6 30,40 C30,43.8 32.7,47 36.3,47.8 L48.5,54 L36.3,60.2 C32.7,61 30,64.2 30,68 C30,72.4 33.6,76 38,76 C41.8,76 45,73.3 45.8,69.7 L54,58 L68,72 L72,68 L54,50 L72,32 L68,28 L54,42 L45.8,30.3 C45,26.7 41.8,24 38,24 Z M38,36 C40.2,36 42,37.8 42,40 C42,42.2 40.2,44 38,44 C35.8,44 34,42.2 34,40 C34,37.8 35.8,36 38,36 Z M38,64 C40.2,64 42,65.8 42,68 C42,70.2 40.2,72 38,72 C35.8,72 34,70.2 34,68 C34,65.8 35.8,64 38,64 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="30"
+                android:startY="24"
+                android:endX="72"
+                android:endY="76"
+                android:type="linear">
+                <item android:color="#FFE0BE4A" android:offset="0.0" />
+                <item android:color="#FFC9A227" android:offset="0.5" />
+                <item android:color="#FFA47B38" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+</vector>

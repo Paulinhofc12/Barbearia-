@@ -1,0 +1,6 @@
+{
+  "name": "Só Brothers",
+  "description": "Aplicação web completa de agendamento para a barbearia Só Brothers com identidade Black & Gold Premium.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
